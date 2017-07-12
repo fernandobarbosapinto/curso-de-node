@@ -1,0 +1,14 @@
+{
+  "name": "livraria",
+  "version": "1.0.0",
+  "description": "Projeto livraria utilizando NODE",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fernando Barbosa Pinto",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
