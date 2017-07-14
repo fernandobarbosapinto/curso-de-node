@@ -1,16 +1,14 @@
+//var connectionFactory = require('../infra/connectionFactory');
+
 module.exports = function(app){
 	app.get('/produtos', function(req, res){
 		//console.log('Listando...');
-		var mysql = require('mysql');
-		var connection = mysql.createConnection({
-			host : 'localhost',
-			user : 'root',
-			password : 'Mudar123',
-			database : 'livraria_nodejs'
-		});
 
+		var connection = app.infra.connectionFactory();
+		
 		connection.query('select * from produtos', function(err, results){
-			res.send(results)
+			//res.send(results)
+			res.render('produtos/lista',{lista:results});
 		});
 
 		connection.end();
