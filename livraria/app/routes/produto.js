@@ -5,7 +5,7 @@ module.exports = function(app){
 		//console.log('Listando...');
 
 		var connection = app.infra.connectionFactory();
-		var produtosBanco = new app.infra.produtosBanco(connection);
+		var produtosBanco = new app.infra.ProdutosDAO(connection);
 		
 		produtosBanco.lista(function(err, results){
 			//res.send(results)
@@ -15,15 +15,4 @@ module.exports = function(app){
 		connection.end();
 		
 	});
-
-	app.get('produtos/remove',function(){
-		var connection = app.infra.connectionFactory();
-		var produtosBanco = app.infra.produtosBanco(connection);
-		var produto = produtosBanco.carrega(id,callback);
-
-		if(produto){
-			produtosBanco.remove(produto,callback);
-		}
-	});
-
 }
