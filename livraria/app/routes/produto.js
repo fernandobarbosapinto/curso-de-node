@@ -5,8 +5,9 @@ module.exports = function(app){
 		//console.log('Listando...');
 
 		var connection = app.infra.connectionFactory();
+		var produtosBanco = new app.infra.produtosBanco(connection);
 		
-		connection.query('select * from produtos', function(err, results){
+		produtosBanco.lista(function(err, results){
 			//res.send(results)
 			res.render('produtos/lista',{lista:results});
 		});
@@ -14,4 +15,15 @@ module.exports = function(app){
 		connection.end();
 		
 	});
+
+	app.get('produtos/remove',function(){
+		var connection = app.infra.connectionFactory();
+		var produtosBanco = app.infra.produtosBanco(connection);
+		var produto = produtosBanco.carrega(id,callback);
+
+		if(produto){
+			produtosBanco.remove(produto,callback);
+		}
+	});
+
 }
