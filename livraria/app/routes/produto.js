@@ -9,7 +9,15 @@ module.exports = function(app){
 		
 		produtosDAO.lista(function(err, results){
 			//res.send(results)
-			res.render('produtos/lista',{lista:results});
+			res.format({
+				html: function(){
+					res.render('produtos/lista',{lista:results});
+				},
+				json: function(){
+					res.json(results);
+				}
+			});
+			
 		});
 
 		connection.end();
@@ -22,14 +30,16 @@ module.exports = function(app){
 		res.render('produtos/cadastro');
 	});
 
-	app.post('/produtos/salva', function(req, res){
+	app.post('/produtos', function(req, res){
 		var produto = req.body;
 		
 		var connection = app.infra.connectionFactory();
 		var produtosDAO = new app.infra.ProdutosDAO(connection);
 		
 		produtosDAO.salva(produto, function(erros, results){
+			//console.log(erros);
 			res.redirect('/produtos');
+			console.log(produto);
 		});
 
 		connection.end();
