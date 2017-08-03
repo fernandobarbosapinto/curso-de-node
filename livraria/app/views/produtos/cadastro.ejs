@@ -16,6 +16,15 @@
 <body>
     <div class="content">
         <h1>Cadastro de Livros</h1>
+        <div class="errors">
+            <%if(errosValidacao) { %>
+            <ul>
+                <% for(var i=0; i<errosValidacao.length; i++) {%>
+                <li><%=errosValidacao[i].param%> - <%=errosValidacao[i].msg%></li>
+                <% } %>
+            </ul>
+            <%}%>
+        </div>
         <form action="/produtos" method="post">
             <p>
                 <label for="titulo">Título</label><br />

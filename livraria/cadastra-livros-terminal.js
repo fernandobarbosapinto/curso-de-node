@@ -19,7 +19,7 @@ var client = http.request(configuracoes, function(res){
 });
 
 var produto = {
-	titulo: 'Mais sobre NODEJS 3',
+	titulo: '',
 	descricao: 'NODEJS, tudo sobre HTTP',
 	preco: '20'
 }
