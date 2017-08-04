@@ -9,7 +9,7 @@ module.exports = function(app){
 		
 		produtosDAO.lista(function(erros, results){
 			//res.send(results)
-			console.log(erros);
+			//console.log(erros);
 			if(erros){
 				return next(erros);
 			}
