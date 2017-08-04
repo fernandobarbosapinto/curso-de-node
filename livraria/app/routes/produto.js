@@ -1,14 +1,19 @@
 //var connectionFactory = require('../infra/connectionFactory');
 
 module.exports = function(app){
-	var listarProdutos = function(req, res){
+	var listarProdutos = function(req, res, next){
 		//console.log('Listando...');
 
 		var connection = app.infra.connectionFactory();
 		var produtosDAO = new app.infra.ProdutosDAO(connection);
 		
-		produtosDAO.lista(function(err, results){
+		produtosDAO.lista(function(erros, results){
 			//res.send(results)
+			console.log(erros);
+			if(erros){
+				return next(erros);
+			}
+
 			res.format({
 				html: function(){
 					res.render('produtos/lista',{lista:results});
@@ -32,7 +37,7 @@ module.exports = function(app){
 
 	app.post('/produtos', function(req, res){
 		var produto = req.body;
-		console.log(produto);
+		//console.log(produto);
 
 		var connection = app.infra.connectionFactory();
 		var produtosDAO = new app.infra.ProdutosDAO(connection);
@@ -42,11 +47,11 @@ module.exports = function(app){
         req.assert('preco','Preco deve ser um número').isFloat();
 
         var errors = req.validationErrors();
-        console.log(errors);
+        //console.log(errors);
         if(errors){
         	res.format({
 			    html: function(){
-			        res.status(400).render('produtos/cadastro',{errosValidacao:erros,produto:produto});
+			        res.status(400).render('produtos/cadastro',{errosValidacao:errors,produto:produto});
 			    },
 			    json: function(){
 			        res.status(400).send(errors);
@@ -63,7 +68,7 @@ module.exports = function(app){
 		produtosDAO.salva(produto, function(erros, results){
 			//console.log(erros);
 			res.redirect('/produtos');
-			console.log(produto);
+			//console.log(produto);
 		});
 
 		connection.end();
